@@ -1,5 +1,3 @@
-# Two-Stage-Sequential-Recommendation-System-for-Short-Video-Streams
-
 # 🎬 Two-Stage Sequential Recommendation for Short-Video Streams
 
 > Industrial-style **Recall + Ranking** pipeline for next-item prediction on short-video platforms, built on the **KuaiSAR** dataset and **Transformer-based** sequential models.
