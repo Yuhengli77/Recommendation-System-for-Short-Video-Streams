@@ -53,8 +53,8 @@ We will establish several baseline models for performance comparison:
 | Model | Description | Notes |
 |--------|--------------|-------|
 | **MostPopular** | Recommends globally most popular items | Non-personalized |
-| **BPR-MF** | Bayesian Personalized Ranking with Matrix Factorization | Ignores sequential order |
-| **GRU4Rec (optional)** | Session-based RNN model | Transitional baseline between static and attention-based models |
+| **ItemCF** | Item-based collaborative filtering using co-occurrence signals | Simple, fast collaborative baseline |
+| **NeuMF** | Neural matrix factorization combining GMF and MLP components | Captures nonlinear user–item interactions |
 
 ---
 
@@ -70,8 +70,8 @@ This design mirrors architectures used in industrial systems (e.g., YouTube, Ali
 
 ### 4.2 Recall Stage
 
-- **Method:** Item-based Collaborative Filtering (ItemCF) or BPR-MF embedding similarity retrieval.  
-- **Advantages:** Simple, efficient, and effective for large-scale candidate generation.  
+- **Method:** Deep Structured Semantic Model (DSSM) that learns user and item embeddings for approximate nearest-neighbor retrieval.  
+- **Advantages:** Captures richer representation similarities than heuristic CF while remaining retrieval-efficient through embedding search.  
 - **Output:** A compact candidate pool for ranking.
 
 ### 4.3 Ranking Stage
@@ -94,11 +94,12 @@ We will perform a literature review to contextualize the design choices.
 
 2. **Industrial Two-Stage Architectures**  
    - Covington et al., *“Deep Neural Networks for YouTube Recommendations”*, RecSys 2016.  
-   - Zhou et al., *“Deep Interest Network for Click-Through Rate Prediction”*, KDD 2018.
+   - Zhou et al., *“Deep Interest Network for Click-Through Rate Prediction”*, KDD 2018.  
+   - Huang et al., *“Learning Deep Structured Semantic Models for Web Search”*, CIKM 2013.
 
-3. **Sequential Recommendation Models**  
-   - Rendle et al., *BPR: Bayesian Personalized Ranking*, UAI 2009.  
-   - Hidasi et al., *GRU4Rec: Session-Based Recommendations with RNNs*, ICLR 2016.  
+3. **Recommendation Models**  
+   - Sarwar et al., *“Item-Based Collaborative Filtering Recommendation Algorithms”*, WWW 2001.  
+   - He et al., *“Neural Collaborative Filtering”*, WWW 2017.  
    - Kang & McAuley, *SASRec: Self-Attentive Sequential Recommendation*, ICDM 2018.
 
 These works collectively support our two-stage architecture and motivate the use of Transformer-based sequence modeling.
@@ -111,7 +112,7 @@ These works collectively support our two-stage architecture and motivate the use
 
 Performance will be evaluated using HR@K and NDCG@K metrics.  
 Results will be summarized in tables and visualized with bar or line plots comparing:
-- **Baselines:** MostPopular, BPR-MF, GRU4Rec  
+- **Baselines:** MostPopular, ItemCF, NeuMF  
 - **Proposed Model:** SASRec
 
 ### 6.2 Qualitative and Case Studies
@@ -120,7 +121,7 @@ We will conduct case studies by visualizing attention distributions for selected
 
 ### 6.3 Discussion
 
-We expect SASRec to significantly outperform non-sequential and RNN-based baselines, confirming the benefit of self-attention in capturing contextual dependencies.  
+We expect SASRec to significantly outperform non-sequential collaborative baselines such as ItemCF and NeuMF, confirming the benefit of self-attention in capturing contextual dependencies.  
 Error analysis will also explore challenges such as cold-start users and popularity bias.
 
 ---
@@ -142,7 +143,7 @@ Our findings will provide insights into the trade-offs between efficiency and ac
 | Deliverable | Description |
 |--------------|-------------|
 | **EDA Report** | Statistical and visual analysis of KuaiSAR dataset |
-| **Baseline Implementations** | MostPopular, BPR-MF, GRU4Rec |
+| **Baseline Implementations** | MostPopular, ItemCF, NeuMF |
 | **SASRec Model** | Transformer-based ranking module |
 | **Evaluation Report** | Quantitative and qualitative results |
 | **Final Report & Presentation** | Comprehensive summary of methodology, results, and insights |
@@ -153,8 +154,10 @@ Our findings will provide insights into the trade-offs between efficiency and ac
 
 - Kang, W., & McAuley, J. (2018). *Self-Attentive Sequential Recommendation*. ICDM.  
 - Covington, P. et al. (2016). *Deep Neural Networks for YouTube Recommendations*. RecSys.  
-- Hidasi, B. et al. (2016). *Session-based Recommendations with Recurrent Neural Networks*. ICLR.  
-- Rendle, S. et al. (2009). *BPR: Bayesian Personalized Ranking from Implicit Feedback*. UAI.  
+- Zhou, G. et al. (2018). *Deep Interest Network for Click-Through Rate Prediction*. KDD.  
+- Huang, P.-S. et al. (2013). *Learning Deep Structured Semantic Models for Web Search*. CIKM.  
+- Sarwar, B. et al. (2001). *Item-Based Collaborative Filtering Recommendation Algorithms*. WWW.  
+- He, X. et al. (2017). *Neural Collaborative Filtering*. WWW.  
 - KuaiSAR Dataset: [https://kuaisar.github.io/](https://kuaisar.github.io/)
 
 ---
